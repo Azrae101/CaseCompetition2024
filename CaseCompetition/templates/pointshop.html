@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point Shop</title>
+</head>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;        
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        text-align: center;
+    }
+    .item {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .item img {
+        float: left;
+        margin-right: 10px;
+        border-radius: 8px;
+    }
+    .item h2 {
+        margin: 0;
+        font-size: 20px;
+    }
+    .item p {
+        margin: 5px 0;
+    }
+    .points {
+        float: right;
+        font-size: 18px;
+    }
+</style>
+</head>
+<body>
+    <div class="container_navbar">
+        <div class="content_navbar">
+            {% include "navbar.html" %}
+        </div>
+    </div>
+</body>
+<body>
+    <div class="container">
+        <h1>Point Shop</h1>
+        <div class="item">
+            <img src="static/coffee.png" width="200" height="150"/>
+            <h2>Free Coffee</h2>
+            <p>Redeem your points for a complimentary coffee!</p>
+            <p class="points">100 points</p>
+        </div>
+        <div class="item">
+            <img src="static/cinema.png" width="175" height="175"/>
+            <h2>Cinema Ticket</h2>
+            <p>Enjoy a movie on us!</p>
+            <p class="points">200 points</p>
+        </div>
+        <div class="item">
+            <img src="static/vindmølle.jpg" width="200" height="150"/>
+            <h2>Vestas Windmill Figurine</h2>
+            <p>Get a cute figurine of a Vestas windmill!</p>
+            <p class="points">300 points</p>
+        </div>
+    </div>
+</body>
+</html>

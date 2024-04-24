@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .body {
+            font-family: 'Arial', sans-serif !important;        
+        }
+        .container_navbar {
+            padding: 0px;
+            background-color: #f9f9f9;
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+
+        .content_navbar {
+            font-family: 'Arial', sans-serif;
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-start; 
+            padding: 0px 10px; 
+        }
+        
+        .button-container {
+            margin-left: auto; /* Adjusted */
+        }
+
+        .button {
+            font-family: 'Arial', sans-serif;
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button.round {
+            display: inline-flex; /* Use flexbox for centering */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            width: 55px; /* Set the width and height to your desired size */
+            height: 50px;
+            padding: 0; /* Remove padding to make sure it's a perfect circle */
+            border-radius: 50%; /* Use 50% border-radius to make it a circle */
+            background-color: #3b5268;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button.round:hover {
+            background-color: #000000;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Button active effect */
+        .button:active {
+            background-color: #0057b3; /* Even darker blue background when clicked */
+            transform: translateY(1px); /* Shift button down slightly when clicked */
+        }
+
+        /* styles login/logout button */
+        .button.login {
+            background-color: red;
+        }
+
+        .button.login:hover {
+            background-color: #ec5008;
+        }
+
+        /* styles logout button */
+        .button.logout {
+            background-color: rgba(0, 145, 255, 0.272);
+        }
+
+        .button.logout:hover {
+            background-color: #0889ec48;
+        }
+
+        /* Dropdown menu styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Streak flame styles */
+        .streak-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .streak-fire {
+            width: 40px;
+            height: 80px;
+            position: relative; 
+        }
+
+        .flame {
+            position: absolute;
+            bottom: -10px;
+            width: 10px;
+            height: 40px;
+            background: #ff5733; /* Firey color */
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-45deg);
+            animation: flame 1s ease-in-out infinite alternate;
+        }
+
+        .flame:nth-child(2) {
+            left: 10px;
+            width: 10px;
+            height: 45px;
+            background: #f82e01; /* Firey color */
+            animation-delay: 0.1s;
+        }
+
+        .flame:nth-child(3) {
+            right: 10px;
+            width: 10px;
+            height: 47px;
+            background: #fffb00; /* Firey color */
+            animation-delay: 0.2s;
+        }
+
+        .flame:nth-child(4) {
+            left: 20px;
+            width: 10px;
+            height: 45px;
+            background: #ff5e00; /* Firey color */
+            animation-delay: 0.3s; 
+        }
+
+        .flame:nth-child(5) {
+            left: 30px;
+            background: #ffae00; /* Firey color */
+            animation-delay: 0.4s;
+        }
+
+        .streak-number {
+            position: absolute;
+            bottom: 0; /* Position at the bottom of the flames */
+            left: 50%;
+            transform: translateX(-50%);
+            color: #000000;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 1; /* Ensure the number is on top of the flames */
+        }
+
+        @keyframes flame {
+            0% {
+                transform: rotate(0deg) scaleY(1);
+            }
+            100% {
+                transform: rotate(0deg) scaleY(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container_navbar">
+        <div class="content_navbar">
+            <a href="{{ url_for('home')}}"><img class="logo" src="{{ url_for('static', filename='vestes.png') }}" width="200" height="50"/></a>
+            <div class="button-container">
+                <!-- Other buttons -->
+                <a href="/todaystasks" class="button">Today's Tasks</a>
+                <a href="/leaderboards" class="button">Leaderboards</a>
+                <a href="/pointshop" class="button">Point Shop</a>
+                {% if not session.logged_in %}
+                    <a href="/login" class="button login">Login</a>
+                {% endif %}
+     
+                <div class="dropdown">
+                    {% if session.logged_in %}
+                    <!-- Turn the profile circle into a button -->
+                    <a href="{{ url_for('profile_settings') }}" class="button round">Profile</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('profile_settings') }}">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                    {% endif %}
+                </div>
+    
+                <!-- Add the streak flame here -->
+                {% if session.logged_in %}
+                <div class="streak-container">
+                    <div class="streak-fire">
+                        <div class="streak-number">34</div>
+                        <div class="flame"></div>
+                        <div class="flame"></div>
+                        <div class="flame"></div>
+                        <div class="flame"></div>
+                        <div class="flame"></div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

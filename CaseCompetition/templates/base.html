@@ -1,0 +1,87 @@
+<!doctype html>
+
+<style>
+    #topnav-center {
+        display: flex;
+        justify-content: flex-end; /* Align items to the right */
+        align-items: center; /* Align items vertically */
+    }
+    .back-btn {
+        display: block; /* Make it a block element */
+        margin-top: 0px; /* Add some top margin */
+        width: 15%; /* Make it take full width */
+        padding: 10px 10px; /* Adjust padding */
+        background-color: #007bff;
+        margin-right: auto;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        height: 40px; /* Set the height */
+    }
+
+    .back-btn:hover, #topnav-center ul li a:hover {
+        background-color: #0056b3;
+    }
+
+    #topnav-center ul {
+        margin-right: 20px; /* Increase the distance between buttons */
+    }
+
+    #topnav-center ul li {
+        margin-right: 10px; /* Increase the distance between list items */
+    }
+
+    #topnav-center ul li a {
+        height: 20px
+    }
+
+
+</style>
+
+<head>
+    <title>CogCards - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<nav id="topnav">
+    <div id="topnav-center">
+             <!-- Back to Home Button -->
+      <button class="back-btn" onclick="location.href='/'">Back to Home</button>
+        <ul>
+            {% if g.user %}
+                <li><span>{{ g.user['username'] }}</span>
+            {% else %}
+                <li><a href="{{ url_for('register') }}">Register</a>
+                <li><a href="{{ url_for('login') }}">Log In</a>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div id="body">
+    {% if g.user %}
+        <nav id="leftnav">
+            <ul>
+                <li><span>{{ g.user['username'] }}</span>
+                <li><a href="#">Following</a></li>
+                <li><a href="{{ url_for('logout') }}">Log Out</a>
+            </ul>
+        </nav>
+    {% endif %}
+
+    <section class="content">
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {% block content %}{% endblock %}
+    </section>
+
+</div>
+</body>
+</html>

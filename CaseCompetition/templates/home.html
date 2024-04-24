@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background-color: #004165;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    main {
+        padding: 20px;
+    }
+    
+    .about, .start {
+        margin-bottom: 30px;
+    }
+    
+    .btn {
+        display: inline-block;
+        background-color: #004165;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .btn:hover {
+        background-color: #002135;
+    }
+    
+    footer {
+        background-color: #004165;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            {% include "navbar.html" %}
+        </div>
+    </div>
+    <div class="container">
+    <header>
+        <h1>Welcome to the Vestas Cybersecurity Challenge!</h1>
+        <p>Protecting our Windmills, One Quiz at a Time</p>
+    </header>
+    <main>
+        <section class="about">
+            <h2>About the Game</h2>
+            <p>Embark on an exciting journey to become a cybersecurity expert while helping Vestas secure its windmill operations. In this interactive game, you'll face quizzes, tasks, and challenges designed to enhance your cybersecurity knowledge.</p>
+            <p>Earn valuable points for every quiz and task you complete. Use your points to unlock exclusive rewards in our in-game point shop!</p>
+        </section>
+        <section class="aboutus">
+            <h2>About us</h2>
+            <p>We are a group of Cognitive Science Bachelor students from Aarhus Universitet. We made this website as part of the 2024 Stay relevant Case Competition. </p>
+            <p>Our members:</p>
+            <ul>
+                <li>Clara Holst</li>
+                <li>Alexandra Sash Ciulisová</li>
+                <li>Lydia Pauli Rambrand</li>
+                <li>Márton Ferenc Péterdi</li>
+            </ul>
+            <p>Our Logo:</p><img src="static/logo.png" width=75>
+        </section>
+        <section class="start">
+            <h2>Get Started</h2>
+            <p>Are you ready to take on the challenge? Click the button below to begin your cybersecurity adventure!</p>
+            <a href="/todaystasks" class="btn">Start Now</a>
+            <p>  .</p>
+            <p> .</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Vestas Wind Systems. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>

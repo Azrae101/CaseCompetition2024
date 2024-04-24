@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Tasks</title>
+    <style>
+        .body {
+            font-family: 'Arial', sans-serif;        
+            position: relative;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; 
+            flex-direction: column;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            font-family: 'Arial', sans-serif !important;
+            width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-sizing: border-box;
+            padding-left: 10vh;
+            background-color: white;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .container h2 {
+            margin-top: 0;
+        }
+        
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .image-container img {
+            max-width: 45%;
+        }
+        .options-container {
+            margin-top: 10px;
+        }
+        .options-container button {
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .title {
+            text-align: center;
+        }
+        .main-title {
+            font-family: 'Helvetica', sans-serif !important;
+            font-weight: bold; 
+            margin-bottom: 0;
+            margin-top: 5vh;
+        }
+        .under-title {
+            font-family: 'Helvetica', sans-serif !important;
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        .checkbox-container {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 20px;
+            transform: scale(2); /* Increase checkbox size */
+        }
+
+        h2 {
+            display: inline-flex; /* Ensure the title and checkbox are in the same line */
+            align-items: center; /* Align vertically with checkbox */
+        }
+
+        .correct {
+            background-color: green;
+            color: white;
+        }
+
+        .wrong {
+            background-color: red;
+            color: white;
+        }
+
+        .hide-options {
+            display: none;
+        }
+
+        .submit-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: rgb(63, 131, 171);
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: rgb(0, 118, 191);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container_navbar">
+        <div class="content_navbar">
+            {% include "navbar.html" %}
+        </div>
+    </div>
+</body>
+
+<body>
+    <h1 class="title main-title">Today's Tasks</h1>
+    <h4 class="title under-title">Complete them all to get the most points!</h4>
+    <div class="container">
+        <div class="checkbox-container">
+            <input type="checkbox" id="change-password-checkbox">
+            <label for="change-password-checkbox"></label>
+        </div>
+        <h2>Change password for [browser]</h2>
+    </div>
+    <div class="container">
+        <h2>Which e-mail is a phishing mail?</h2>
+        <div class="image-container" id="phishing-images">
+            <img src="static/phishing.jpg" alt="Phishing Mail 1" onclick="toggleMark(this)">
+            <img src="static/phishing1.png" alt="Phishing Mail 2" onclick="toggleMark(this)">
+        </div>
+        <button class="submit-button" onclick="submitPhishing()">Submit</button>
+        <div id="phishing-result" style="margin-top: 20px; text-align: center; display: none;"></div>
+    </div>
+    <div class="container">
+        <h2>Which country has suffered the most from cybercrime?</h2>
+        <div class="options-container">
+            <button onclick="checkAnswer(1)">Russia</button>
+            <button onclick="checkAnswer(2)">France</button>
+            <button onclick="checkAnswer(3)">United Kingdom</button>
+            <button onclick="checkAnswer(4)">India</button>
+        </div>
+        <div id="result" style="margin-top: 20px; text-align: center; display: none;"></div>
+    </div>
+    <div class="container">
+        <div class="checkbox-container">
+            <input type="checkbox" id="change-password-checkbox">
+            <label for="change-password-checkbox"></label>
+        </div>
+        <h2>Login with two-factor-authentication</h2>
+    </div>
+</div>
+
+    <!-- JavaScript for checking quiz-answers -->
+    <script>
+        function checkAnswer(selectedOption) {
+            var buttons = document.querySelectorAll('.options-container button');
+            var resultContainer = document.getElementById('result');
+
+            // Disable all buttons
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+            }
+
+            // Show all colors
+            var optionsContainer = document.querySelector('.options-container');
+            optionsContainer.classList.remove('hide-options');
+
+            // Display correct/wrong message along with explanation
+            if (selectedOption === 3) {
+                buttons[selectedOption - 1].classList.add('correct');
+                resultContainer.innerText = "You were correct.\n\nThe UK has the highest density of cyber crime victims per million internet users – 4783.";
+            } else {
+                buttons[selectedOption - 1].classList.add('wrong');
+                resultContainer.innerText = "You were wrong.\n\nThe UK has the highest density of cyber crime victims per million internet users – 4783.";
+            }
+            resultContainer.style.display = "block"; // Show the result container
+        }
+    </script>
+
+        <!-- JavaScript for checking picture answers -->
+    <script>
+        var markedImages = [];
+
+        function toggleMark(image) {
+            if (markedImages.includes(image)) {
+                markedImages = markedImages.filter(item => item !== image);
+                image.style.border = "none"; // Unmark the image
+            } else {
+                markedImages.push(image);
+                image.style.border = "5px solid red"; // Mark the image
+            }
+        }
+
+        function submitPhishing() {
+            var resultContainer = document.getElementById('phishing-result');
+
+            if (markedImages.length === 2) {
+                resultContainer.innerText = "Both e-mails were phishing mails";
+                resultContainer.style.color = "green";
+            } else {
+                resultContainer.innerText = "Both e-mails were actually phishing mails";
+                resultContainer.style.color = "red";
+            }
+            resultContainer.style.display = "block"; // Show the result container
+        }
+
+        function checkAnswer(selectedOption) {
+            var buttons = document.querySelectorAll('.options-container button');
+            var resultContainer = document.getElementById('result');
+
+            // Disable all buttons
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+            }
+
+            // Display correct/wrong message along with explanation
+            if (selectedOption === 3) {
+                buttons[selectedOption - 1].classList.add('correct');
+                resultContainer.innerText = "You were correct. The UK has the highest density of cyber crime victims per million internet users – 4783.";
+            } else {
+                buttons[selectedOption - 1].classList.add('wrong');
+                resultContainer.innerText = "You were wrong. The UK has the highest density of cyber crime victims per million internet users – 4783.";
+            }
+            resultContainer.style.display = "block"; // Show the result container
+        }
+    </script>
+</body>
+</html>
